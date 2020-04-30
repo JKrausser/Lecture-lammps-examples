@@ -1,0 +1,21 @@
+units					lj 										
+atom_style				full  
+boundary 				p p p   
+read_data				Config_polymerMelt_Nc100_Lc20_T1.000.dat 
+neighbor       			0.3 bin
+neigh_modify  	 		every 1 delay 1
+bond_style      		fene
+bond_coeff      		1 30.0 1.5 1.0 1.0
+angle_style    			harmonic
+angle_coeff     		1 10.0 180
+pair_style				lj/cut 1.125
+pair_coeff				* * 1.0 1.0			
+pair_modify				shift yes 		
+log  						Results/Log_polymerMelt_Nc100_Lc20_T1.000_0.dat
+dump			  			1 all xyz 100 Results/Movie_polymerMelt_Nc100_Lc20_T1.000_0.xyz
+fix             			1 all nve
+fix 						2 all langevin 1 1 1 1
+thermo						1000
+thermo_style 				custom step temp pe etotal press
+timestep					0.008
+run							100000
